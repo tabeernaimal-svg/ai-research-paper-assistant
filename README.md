@@ -1,99 +1,57 @@
 # AI Research Paper Assistant
 
-An AI-powered research paper assistant that uses **Natural Language Processing (NLP), sentence embeddings, and vector similarity search** to retrieve relevant information from research papers.
+An NLP-based research paper assistant that uses sentence embeddings and FAISS similarity search to retrieve relevant information from research papers.
 
 ## Project Overview
 
-Reading long research papers can be time-consuming. This project demonstrates a simple **Retrieval-Augmented Generation (RAG)** workflow that allows users to ask questions about a research paper and retrieve the most relevant passages from it.
+This project demonstrates a retrieval-based approach for interacting with research papers. A PDF research paper is converted into text, cleaned, divided into sentence-based chunks, transformed into vector embeddings, and indexed using FAISS.
 
-The project uses the paper **"A Survey of Large Language Models"** by Wayne Xin Zhao et al. as the source document.
+When a user asks a question, the system converts the question into an embedding and retrieves the most semantically relevant passages from the paper.
 
-## How It Works
-
-The system follows this pipeline:
-
-**Research Paper PDF → Text Extraction → Text Cleaning → Sentence Chunking → Embeddings → FAISS Vector Search → Relevant Evidence**
-
-### 1. PDF Text Extraction
-
-The research paper is loaded and its text is extracted using `pypdf`.
-
-### 2. Text Cleaning
-
-The reference section is removed to reduce irrelevant retrieval results.
-
-### 3. Sentence Chunking
-
-The extracted text is divided into smaller sentence-based chunks to make semantic retrieval more effective.
-
-### 4. Embeddings
-
-Each text chunk is converted into a numerical vector using the **Sentence Transformers** model:
-
-`all-MiniLM-L6-v2`
-
-### 5. Vector Search
-
-The embeddings are stored in a **FAISS** index, allowing the system to find passages that are semantically similar to a user's question.
-
-### 6. Question Retrieval
-
-When a user asks a question, the question is also converted into an embedding. FAISS then retrieves the most relevant passages from the research paper.
+The project implements the **retrieval component of a Retrieval-Augmented Generation (RAG) system**.
 
 ## Technologies Used
 
 * Python
-* Google Colab
-* PyPDF
 * Sentence Transformers
 * FAISS
 * NumPy
-* Pandas
-* Hugging Face Transformers
+* PyPDF
+* Google Colab
+
+## Pipeline
+
+**PDF → Text Extraction → Text Cleaning → Sentence Chunking → Embeddings → FAISS Index → Semantic Retrieval**
+
+## How It Works
+
+1. A research paper is loaded from a PDF.
+2. The text is extracted and cleaned.
+3. The paper is divided into manageable sentence-based chunks.
+4. Each chunk is converted into a numerical embedding using Sentence Transformers.
+5. FAISS indexes the embeddings for efficient similarity search.
+6. A user's question is also converted into an embedding.
+7. The system retrieves the most semantically relevant passages from the paper.
+8. The retrieved passages are displayed as evidence for the user.
+
+## Paper Used
+
+**A Survey of Large Language Models**
+
+Wayne Xin Zhao et al.
 
 ## Example
 
-**Question:**
+The assistant can be asked:
 
 > What special abilities do large language models exhibit?
 
-The system retrieves relevant passages discussing capabilities such as:
+The system retrieves relevant passages discussing topics such as instruction following, reasoning, task-solving capabilities, and emergent abilities.
 
-* Instruction following
-* Step-by-step reasoning
-* Complex task solving
-* In-context learning
-* Improved generalization
+## Project Objective
 
-## Project Results
+The goal of this project is to demonstrate how semantic search can be used to retrieve relevant evidence from a research paper.
 
-The final system successfully:
+Instead of relying only on keyword matching, the system uses sentence embeddings to capture the semantic meaning of the question and the paper's content.
 
-* Extracts text from a 144-page research paper
-* Removes the reference section
-* Creates 350 semantic text chunks
-* Generates 384-dimensional embeddings
-* Stores the embeddings in a FAISS vector index
-* Retrieves relevant evidence for natural-language questions
-
-## Notebook
-
-The complete implementation is available in:
-
-`AI_Research_Paper_Assistant.ipynb`
-
-## Future Improvements
-
-Possible improvements include:
-
-* Better PDF layout and table extraction
-* Improved chunking based on document sections
-* Source/page citations for retrieved passages
-* A stronger instruction-tuned language model
-* A web interface using Streamlit or Gradio
-* Support for multiple research papers
-* Automatic answer generation using retrieved evidence
-
-## Learning Objective
-
-This project demonstrates the fundamental components of a **Retrieval-Augmented Generation (RAG)** system and provides practical experience with document processing, embeddings, semantic search, and vector databases.
+This project provides a foundation for a more complete RAG system, where a language model could later use the retrieved evidence to generate a natural-language answer.
